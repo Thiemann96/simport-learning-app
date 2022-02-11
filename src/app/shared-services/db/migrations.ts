@@ -9,9 +9,8 @@ export async function runMigrations(
     up TEXT NOT NULL);`
   const {
     changes: { changes },
-    message,
   } = await db.execute(init)
-  if (changes === -1) throw new Error(`can't run DB migrations: ${message}`)
+  if (changes === -1) throw new Error(`can't run DB migrations`)
 
   const { values } = await db.query(
     `SELECT version FROM migrations ORDER BY version DESC LIMIT 1;`
@@ -30,12 +29,9 @@ async function runMigration(
   // run migrations
   const {
     changes: { changes: changesMigration },
-    message: messageMigration,
   } = await db.execute(migration)
   if (changesMigration === -1)
-    throw new Error(
-      `DB migration to v${targetVersion} failed: ${messageMigration}`
-    )
+    throw new Error(`DB migration to v${targetVersion} failed`)
 
   // persist migration-info
   const set = [
@@ -46,11 +42,10 @@ async function runMigration(
   ]
   const {
     changes: { changes: changesMigrationInfo },
-    message: messageMigrationInfo,
   } = await db.executeSet(set)
   if (changesMigrationInfo === -1)
     throw new Error(
-      `Persisting DB migration information to v${targetVersion} failed: ${messageMigrationInfo}`
+      `Persisting DB migration information to v${targetVersion} failed`
     )
 }
 

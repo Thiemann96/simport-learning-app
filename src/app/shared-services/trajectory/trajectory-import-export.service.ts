@@ -9,15 +9,11 @@ import { v4 as uuid } from 'uuid'
 import { Platform } from '@ionic/angular'
 import { HttpClient } from '@angular/common/http'
 import { SqliteService } from '../db/sqlite.service'
-import {
-  Plugins,
-  FilesystemDirectory,
-  FilesystemEncoding,
-} from '@capacitor/core'
+import { Filesystem, Directory, Encoding } from '@capacitor/filesystem'
+import { FileSelect } from 'capacitor-file-select'
 import { SocialSharing } from '@ionic-native/social-sharing/ngx'
 import { take } from 'rxjs/operators'
 import { TranslateService } from '@ngx-translate/core'
-const { FileSelector, Filesystem } = Plugins
 
 interface TrajectoryExportFile {
   trajectory: string
@@ -60,11 +56,13 @@ export class TrajectoryImportExportService extends TrajectoryService {
   async selectAndImportTrajectory(
     didSelectFileCallback: () => void
   ): Promise<TrajectoryImportResult> {
-    const selectedFile = await FileSelector.fileSelector({
-      multiple_selection: false,
-      ext: ['*'],
+    /*
+    const selectedFiles = await FileSelect.select({
+      multiple: false,
+      extensions: ['*'],
     })
     didSelectFileCallback()
+    const selectedFile = selectedFiles.files
     if (this.platform.is('android')) {
       const parsedPaths = JSON.parse(selectedFile.paths)
       const parsedOriginalNames = JSON.parse(selectedFile.original_names)
@@ -88,7 +86,7 @@ export class TrajectoryImportExportService extends TrajectoryService {
           selectedFile.extensions[index]
         )
       }
-    }
+    }*/
     return {
       success: false,
       errorMessage: this.translateService.instant(
@@ -238,8 +236,8 @@ export class TrajectoryImportExportService extends TrajectoryService {
       await Filesystem.writeFile({
         path: `Download/${trajectoryFile.filename}.json`,
         data: trajectoryFile.trajectory,
-        directory: FilesystemDirectory.ExternalStorage,
-        encoding: FilesystemEncoding.UTF8,
+        directory: Directory.ExternalStorage,
+        encoding: Encoding.UTF8,
       })
       return { success: true, errorMessage: null }
     } catch (e) {

@@ -12,10 +12,8 @@ import { SqliteService } from './../db/sqlite.service'
 import { InferenceService } from './../inferences/inference.service'
 import { NotificationService } from './../notification/notification.service'
 import { NotificationType } from './../notification/types'
-import { Plugins } from '@capacitor/core'
+import { App } from '@capacitor/app'
 import { TranslateService } from '@ngx-translate/core'
-
-const { App } = Plugins
 
 @Injectable()
 export class LocationService implements OnDestroy {

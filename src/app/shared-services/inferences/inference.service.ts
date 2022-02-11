@@ -21,7 +21,7 @@ import { NotificationService } from '../notification/notification.service'
 import { NotificationType } from '../notification/types'
 import { SqliteService } from '../db/sqlite.service'
 import { LoadingController } from '@ionic/angular'
-import { Plugins } from '@capacitor/core'
+import { App } from '@capacitor/app'
 import { TimetableService } from '../timetable/timetable.service'
 import { ReverseGeocodingService } from '../reverse-geocoding/reverse-geocoding.service'
 import { AbstractBackgroundService } from '../background/AbstractBackgroundService'
@@ -32,8 +32,6 @@ import {
 import { FeatureFlagService } from '../feature-flag/feature-flag.service'
 import { InferenceConfidenceThresholds } from 'src/app/model/inference'
 import { TranslateService } from '@ngx-translate/core'
-
-const { App } = Plugins
 
 class InferenceFilterConfiguration {
   confidenceThreshold: number

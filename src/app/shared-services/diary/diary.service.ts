@@ -3,14 +3,9 @@ import { v4 as uuid } from 'uuid'
 import { DiaryEntry } from 'src/app/model/diary-entry'
 import { SqliteService } from '../db/sqlite.service'
 import { Platform } from '@ionic/angular'
-import {
-  FilesystemDirectory,
-  FilesystemEncoding,
-  Plugins,
-} from '@capacitor/core'
+import { Filesystem, Directory, Encoding } from '@capacitor/filesystem'
+import { Share } from '@capacitor/share'
 import { TranslateService } from '@ngx-translate/core'
-
-const { Filesystem, Share } = Plugins
 
 @Injectable({
   providedIn: 'root',
@@ -70,12 +65,12 @@ export class DiaryService {
         path: `SIMPORT_diary_${
           new Date().toISOString().replace(/:/g, '-').split('.')[0]
         }.txt`,
-        directory: FilesystemDirectory.ExternalStorage,
-        encoding: FilesystemEncoding.UTF8,
+        directory: Directory.ExternalStorage,
+        encoding: Encoding.UTF8,
       })
 
       if (this.platform.is('android')) {
-        await Share.requestPermissions()
+        await Filesystem.requestPermissions()
       }
 
       Share.share({

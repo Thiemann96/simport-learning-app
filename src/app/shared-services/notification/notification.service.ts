@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { NotificationType } from './types'
-import { Plugins } from '@capacitor/core'
+import { LocalNotifications } from '@capacitor/local-notifications'
 
 @Injectable({
   providedIn: 'root',
@@ -11,17 +11,16 @@ export class NotificationService {
   }
 
   private checkPermission() {
-    Plugins.LocalNotifications.requestPermission().then(
-      (permissionResponse) => {
-        console.log(
-          'notification permission granted:' + permissionResponse.granted
-        )
-      }
-    )
+    LocalNotifications.requestPermissions().then((permissionResponse) => {
+      console.log(
+        'notification permission granted: ' +
+          (permissionResponse.display === 'granted')
+      )
+    })
   }
 
   notify(type: NotificationType, title: string, text: string) {
-    Plugins.LocalNotifications.schedule({
+    LocalNotifications.schedule({
       notifications: [
         {
           id: type,

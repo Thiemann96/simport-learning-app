@@ -1,8 +1,9 @@
 import { BehaviorSubject } from 'rxjs'
-import { Capacitor, Plugins } from '@capacitor/core'
+import { Capacitor } from '@capacitor/core'
+import { App } from '@capacitor/app'
 import BackgroundFetch from 'cordova-plugin-background-fetch'
 import { BackgroundService, BackgroundState } from './background.service'
-const { App, BackgroundTask } = Plugins
+import { BackgroundTask } from '@robingenz/capacitor-background-task'
 
 /**
  * Abstract background service class that runs background tasks

@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core'
-import { DeviceInfo, Plugins } from '@capacitor/core'
+import { App, AppInfo } from '@capacitor/app'
+import { Device, DeviceInfo } from '@capacitor/device'
 import { ModalController } from '@ionic/angular'
 import { Subscription } from 'rxjs'
 import { Trajectory, TrajectoryMeta, TrajectoryType } from '../model/trajectory'
@@ -12,7 +13,8 @@ import { TrajectoryService } from '../shared-services/trajectory/trajectory.serv
   styleUrls: ['./debug-window.component.scss'],
 })
 export class DebugWindowComponent implements OnInit, OnDestroy {
-  myDevice: Record<keyof DeviceInfo, any>
+  deviceInfo: Record<keyof DeviceInfo, any>
+  appInfo: AppInfo
   trajectories: TrajectoryMeta[]
   userTrajectory: Trajectory
   importedTrajectories: TrajectoryMeta[]
@@ -31,10 +33,8 @@ export class DebugWindowComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit() {
-    this.myDevice = (await Plugins.Device.getInfo()) as Record<
-      keyof DeviceInfo,
-      any
-    >
+    this.deviceInfo = (await Device.getInfo()) as Record<keyof DeviceInfo, any>
+    this.appInfo = await App.getInfo()
 
     this.subscriptions.push(
       this.trajectoryService.getAllMeta().subscribe((ts) => {
