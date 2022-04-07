@@ -38,6 +38,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./diary/diary.module').then((m) => m.DiaryPageModule),
   },
+  {
+    path: 'habits',
+    loadChildren: () =>
+      import('./habits/habits.module').then((m) => m.HabitsPageModule),
+  },
 ]
 @NgModule({
   imports: [
