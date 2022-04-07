@@ -60,7 +60,6 @@ export class WP1Component {
   }
 
   loadToMap(trajectory) {
-    console.log(trajectory)
     const trajectoryLayer = L.layerGroup()
     trajectory.latslngs.map((point, index) => {
       let color
@@ -75,7 +74,7 @@ export class WP1Component {
           color = '#6200ea'
           break
       }
-      L.circle(trajectory, { radius: 15, color }).addTo(trajectoryLayer)
+      L.circle(point, { radius: 15, color }).addTo(trajectoryLayer)
     })
     const polyline = L.polyline(trajectory.latslngs, { color: 'blue' }).addTo(
       trajectoryLayer

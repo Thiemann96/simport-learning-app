@@ -39,7 +39,9 @@
             <ion-card>
               <ion-item>
                 <ion-icon name="analytics-outline" slot="start"></ion-icon>
-                <ion-label>{{ trajectory.dates[0][0] }}</ion-label>
+                <ion-label
+                  >{{ trajectory.dates[0][0] }} {{ trajectory.dates[0][1] }}
+                </ion-label>
                 <ion-button
                   color="success"
                   (click)="loadToMap(trajectory)"
